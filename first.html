@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎹 DAW · Coto Code Demo</title>
+  
+    
+
+    .daw-header h1 small {
+      font-size: 0.7rem;
+      background: #1f3348;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      color: #7e9bc0;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .transport {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .btn {
+      background: #1f3348;
+      border: none;
+      color: #d6e4f5;
+      padding: 0.5rem 1.4rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #0b121e, 0 2px 8px #00000055;
+      transition: all 0.07s;
+      border: 1px solid #304a63;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #0b121e;
+    }
+    .btn-primary {
+      background: #3b82f6;
+      border-color: #60a5fa;
+      box-shadow: 0 4px 0 #1e3a8a;
+    }
+    .btn-danger {
+      background: #dc2626;
+      border-color: #f87171;
+      box-shadow: 0 4px 0 #7f1d1d;
+    }
+    .btn-success {
+      background: #16a34a;
+      border-color: #4ade80;
+      box-shadow: 0 4px 0 #14532d;
+    }
+
+    /* grid layout */
+    .daw-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 2rem;
+    }
+    @media (max-width: 780px) {
+      .daw-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .daw-container { padding: 1.2rem; }
+    }
+
+    /* ----- keyboard ----- */
+    .keyboard-panel {
+      background: #0e1724;
+      border-radius: 2rem;
+      padding: 1.5rem 0.8rem 1.2rem;
+      box-shadow: inset 0 4px 12px #00000077;
+    }
+    .panel-label {
+      display: flex;
+      justify-content: space-between;
+      color: #6a88b0;
+      font-size: 0.7rem;
+      padding: 0 0.4rem 0.8rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .piano {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .key {
+      background: #eef3fc;
+      border: 1px solid #1b2638;
+      border-radius: 0 0 10px 10px;
+      width: 48px;
+      height: 140px;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #0a111d, 0 4px 10px #00000088;
+      transition: all 0.05s linear;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 12px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #1f2a3e;
+      text-shadow: 0 1px 0 white;
+    }
+    .key.black {
+      background: #111c2b;
+      width: 30px;
+      height: 90px;
+      margin-left: -14px;
+      margin-right: -14px;
+      z-index: 2;
+      box-shadow: 0 6px 0 #060b12, 0 4px 10px #000000cc;
+      border: 1px solid #0a111d;
+      color: #b7cbe0;
+      text-shadow: 0 1px 0 #00000088;
+      padding-bottom: 6px;
+    }
+    .key:active, .key.active {
+      transform: translateY(7px);
+      box-shadow: 0 2px 0 #0a111d;
+    }
+    .key.black:active, .key.black.active {
+      transform: translateY(5px);
+      box-shadow: 0 1px 0 #060b12;
+    }
+    .key-label {
+      font-size: 0.5rem;
+      opacity: 0.7;
+    }
+
+    /* ----- sequencer / pads ----- */
+    .sequencer-panel {
+      background: #0e1724;
+      border-radius: 2rem;
+      padding: 1.5rem 0.8rem 1.2rem;
+      box-shadow: inset 0 4px 12px #00000077;
+    }
+    .pad-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 0.2rem;
+    }
+    .pad {
+      background: #1a283b;
+      border-radius: 1.2rem;
+      aspect-ratio: 1/1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #8aaacf;
+      border: 1px solid #2d435e;
+      box-shadow: 0 5px 0 #0b121e, inset 0 1px 0 #3f5a78;
+      cursor: pointer;
+      transition: all 0.08s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pad:active, .pad.active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #0b121e;
+    }
+    .pad .emoji {
+      font-size: 1.5rem;
+      margin-bottom: 2px;
+    }
+    .pad.kick { background: #2d1f3a; border-color: #6b3f7a; }
+    .pad.snare { background: #1e2d3a; border-color: #3f6b7a; }
+    .pad.hat { background: #2a2a2a; border-color: #5a5a5a; }
+    .pad.perc { background: #1f3a2a; border-color: #3f7a5a; }
+
+    /* volume & fx */
+    .controls-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #0e1724;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4rem;
+      border: 1px solid #1f3348;
+    }
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #8aaacf;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    input[type="range"] {
+      width: 100px;
+      height: 4px;
+      background: #2a3f55;
+      border-radius: 10px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #facc15;
+      border-radius: 20px;
+      border: 2px solid #0e1724;
+      cursor: pointer;
+      box-shadow: 0 2px 6px #00000077;
+    }
+    .badge {
+      background: #1f3348;
+      padding: 0.1rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      color: #7e9bc0;
+    }
+    .footer-note {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #3e5775;
+      font-size: 0.7rem;
+      letter-spacing: 0.8px;
+    }
+  </style>
+</head>
+<body>
+<div class="daw-container">
+  <div class="daw-header">
+    <h1>🎛️ Coto DAW <small>demo · code</small></h1>
+    <div class="transport">
+      <button class="btn btn-success" id="playSeqBtn">▶ Play</button>
+      <button class="btn btn-danger" id="stopSeqBtn">⏹ Stop</button>
+    </div>
+  </div>
+
+  <div class="daw-grid">
+    <!-- left: keyboard -->
+    <div class="keyboard-panel">
+      <div class="panel-label"><span>🎹 keys</span> <span>click · drag</span></div>
+      <div class="piano" id="pianoKeys">
+        <!-- C4 -> B5 (white + black) -->
+        <!-- will be injected by JS -->
+      </div>
+    </div>
+
+    <!-- right: drum pads + seq -->
+    <div class="sequencer-panel">
+      <div class="panel-label"><span>🥁 drum pads</span> <span>trigger</span></div>
+      <div class="pad-grid" id="drumPads">
+        <div class="pad kick" data-sound="kick">🥁<span class="emoji">⚡</span>kick</div>
+        <div class="pad snare" data-sound="snare">🥁<span class="emoji">💥</span>snare</div>
+        <div class="pad hat" data-sound="hat">🥁<span class="emoji">🔊</span>hat</div>
+        <div class="pad perc" data-sound="perc">🥁<span class="emoji">✨</span>perc</div>
+      </div>
+      <!-- simple step sequencer indicator -->
+      <div style="margin-top: 1.2rem; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;" id="stepLights">
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+        <span class="badge" style="background:#2a3f55;">●</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- controls -->
+  <div class="controls-row">
+    <div class="control-group">
+      <span>🔊 vol</span>
+      <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="0.6">
+      <span id="volDisplay">60%</span>
+    </div>
+    <div class="control-group">
+      <span>🎵 BPM</span>
+      <input type="range" id="bpmControl" min="60" max="180" step="1" value="120">
+      <span id="bpmDisplay">120</span>
+    </div>
+    <div class="badge" style="margin-left: auto;">🔌 Web Audio</div>
+  </div>
+  <div class="footer-note">🎹 click keys · tap pads · play sequence · coto code daw</div>
+</div>
+
+<script>
+  (function() {
+    // ----- Web Audio context -----
+    let audioCtx = null;
+    let masterGain = null;
+
+    function initAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = parseFloat(document.getElementById('masterVolume').value);
+      masterGain.connect(audioCtx.destination);
+    }
+
+    // ----- sound generation (synth / drum) -----
+    function playTone(frequency, duration = 0.25, type = 'sawtooth', volume = 0.25) {
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+        gain.gain.setValueAtTime(volume * masterGain.gain.value, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) { /* silently ignore */ }
+    }
+
+    function playDrum(kind) {
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const noise = audioCtx.createBufferSource();
+        // simple noise for snare/hat
+        const bufferSize = audioCtx.sampleRate * 0.08;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.6;
+
+        let vol = 0.3 * masterGain.gain.value;
+        let duration = 0.12;
+
+        switch (kind) {
+          case 'kick':
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.12);
+            gain.gain.setValueAtTime(vol * 1.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+            osc.connect(gain);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.15);
+            break;
+          case 'snare':
+            // noise + tone
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
+            gain.gain.setValueAtTime(vol * 0.6, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.connect(gain);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+            // noise
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.setValueAtTime(vol * 0.5, audioCtx.currentTime);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+            noise.buffer = buffer;
+            noise.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            noise.start();
+            noise.stop(audioCtx.currentTime + 0.08);
+            return;
+          case 'hat':
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(3000, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol * 0.4, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+            osc.connect(gain);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.04);
+            // noise hat
+            const hatNoise = audioCtx.createBufferSource();
+            const hBuf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.04, audioCtx.sampleRate);
+            const hData = hBuf.getChannelData(0);
+            for (let i = 0; i < hData.length; i++) hData[i] = (Math.random() * 2 - 1) * 0.4;
+            const hGain = audioCtx.createGain();
+            hGain.gain.setValueAtTime(vol * 0.5, audioCtx.currentTime);
+            hGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+            hatNoise.buffer = hBuf;
+            hatNoise.connect(hGain);
+            hGain.connect(audioCtx.destination);
+            hatNoise.start();
+            hatNoise.stop(audioCtx.currentTime + 0.03);
+            return;
+          case 'perc':
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.06);
+            gain.gain.setValueAtTime(vol * 0.6, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+            osc.connect(gain);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.08);
+            break;
+        }
+        gain.connect(audioCtx.destination);
+      } catch (e) {}
+    }
+
+    // ----- keyboard mapping (C4 .. B5) -----
+    const notes = [
+      { note: 'C4', freq: 261.63, black: false },
+      { note: 'C#4', freq: 277.18, black: true },
+      { note: 'D4', freq: 293.66, black: false },
+      { note: 'D#4', freq: 311.13, black: true },
+      { note: 'E4', freq: 329.63, black: false },
+      { note: 'F4', freq: 349.23, black: false },
+      { note: 'F#4', freq: 369.99, black: true },
+      { note: 'G4', freq: 392.00, black: false },
+      { note: 'G#4', freq: 415.30, black: true },
+      { note: 'A4', freq: 440.00, black: false },
+      { note: 'A#4', freq: 466.16, black: true },
+      { note: 'B4', freq: 493.88, black: false },
+      { note: 'C5', freq: 523.25, black: false },
+      { note: 'C#5', freq: 554.37, black: true },
+      { note: 'D5', freq: 587.33, black: false },
+      { note: 'D#5', freq: 622.25, black: true },
+      { note: 'E5', freq: 659.25, black: false },
+      { note: 'F5', freq: 698.46, black: false },
+      { note: 'F#5', freq: 739.99, black: true },
+      { note: 'G5', freq: 783.99, black: false },
+      { note: 'G#5', freq: 830.61, black: true },
+      { note: 'A5', freq: 880.00, black: false },
+      { note: 'A#5', freq: 932.33, black: true },
+      { note: 'B5', freq: 987.77, black: false },
+    ];
+
+    const pianoContainer = document.getElementById('pianoKeys');
+    notes.forEach((n, idx) => {
+      const key = document.createElement('div');
+      key.className = `key ${n.black ? 'black' : ''}`;
+      key.dataset.freq = n.freq;
+      key.dataset.note = n.note;
+      key.innerHTML = `<span class="key-label">${n.note}</span>`;
+      key.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        key.classList.add('active');
+        playTone(n.freq, 0.3, 'sawtooth', 0.2);
+      });
+      key.addEventListener('mouseup', () => key.classList.remove('active'));
+      key.addEventListener('mouseleave', () => key.classList.remove('active'));
+      key.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        key.classList.add('active');
+        playTone(n.freq, 0.3, 'sawtooth', 0.2);
+      });
+      key.addEventListener('touchend', () => key.classList.remove('active'));
+      pianoContainer.appendChild(key);
+    });
+
+    // ----- drum pads -----
+    document.querySelectorAll('.pad').forEach(pad => {
+      const sound = pad.dataset.sound;
+      pad.addEventListener('click', () => {
+        pad.classList.add('active');
+        playDrum(sound);
+        setTimeout(() => pad.classList.remove('active'), 100);
+      });
+      pad.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        pad.classList.add('active');
+        playDrum(sound);
+        setTimeout(() => pad.classList.remove('active'), 100);
+      });
+    });
+
+    // ----- volume & BPM controls -----
+    const volSlider = document.getElementById('masterVolume');
+    const volDisplay = document.getElementById('volDisplay');
+    volSlider.addEventListener('input', () => {
+      const val = parseFloat(volSlider.value);
+      volDisplay.textContent = Math.round(val * 100) + '%';
+      if (masterGain) masterGain.gain.value = val;
+    });
+
+    const bpmSlider = document.getElementById('bpmControl');
+    const bpmDisplay = document.getElementById('bpmDisplay');
+    bpmSlider.addEventListener('input', () => {
+      bpmDisplay.textContent = bpmSlider.value;
+      if (seqInterval) {
+        clearInterval(seqInterval);
+        startSequencer(parseInt(bpmSlider.value));
+      }
+    });
+
+    // ----- sequencer (step) -----
+    let seqInterval = null;
+    let stepIndex = 0;
+    const stepLights = document.querySelectorAll('#stepLights .badge');
+    const drumSounds = ['kick', 'snare', 'hat', 'perc'];
+
+    function startSequencer(bpm = 120) {
+      if (seqInterval) clearInterval(seqInterval);
+      const intervalMs = (60 / bpm) * 1000 / 4; // 16th notes
+      stepIndex = 0;
+      seqInterval = setInterval(() => {
+        // light up current step
+        stepLights.forEach((el, i) => {
+          el.style.background = i === stepIndex ? '#facc15' : '#2a3f55';
+          el.style.color = i === stepIndex ? '#0a0e17' : '#7e9bc0';
+        });
+        // play a random drum each step (demo)
+        const randIdx = Math.floor(Math.random() * drumSounds.length);
+        playDrum(drumSounds[randIdx]);
+        stepIndex = (stepIndex + 1) % stepLights.length;
+      }, intervalMs);
+    }
+
+    document.getElementById('playSeqBtn').addEventListener('click', () => {
+      initAudio();
+      const bpm = parseInt(bpmSlider.value);
+      startSequencer(bpm);
+    });
+
+    document.getElementById('stopSeqBtn').addEventListener('click', () => {
+      if (seqInterval) {
+        clearInterval(seqInterval);
+        seqInterval = null;
+      }
+      stepLights.forEach(el => {
+        el.style.background = '#2a3f55';
+        el.style.color = '#7e9bc0';
+      });
+    });
+
+    // init master gain if audio context created later
+    window.addEventListener('load', () => {
+      // pre-init audio on any click
+      document.addEventListener('click', () => initAudio(), { once: true });
+    });
+
+  })();
+</script>
+</body>
+</html>
