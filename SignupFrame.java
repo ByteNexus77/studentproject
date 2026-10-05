@@ -4,14 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 
-public class SignupFrame extends JFrame {
 
-    private JTextField txtName, txtEmail, txtAnswer, txtAddress;
-    private JPasswordField txtPass;
-    private JComboBox<String> comboSQ;
-    private JButton btnSignup, btnBack;
-
-    public SignupFrame() {
         setTitle("ReVendo - Sign Up");
         setSize(500, 700); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
